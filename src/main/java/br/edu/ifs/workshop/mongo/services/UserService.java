@@ -35,6 +35,12 @@ public class UserService {
 		userRepository.delete(findById(id));
 	}
 	
+	public User update(User user) {
+		User newUser = findById(user.getId());
+		BeanUtils.copyProperties(user, newUser);
+		return userRepository.save(newUser);
+	}
+	
 	public User fromDTO(UserDTO userDTO) {
 		User user = new User();
 		BeanUtils.copyProperties(userDTO, user);

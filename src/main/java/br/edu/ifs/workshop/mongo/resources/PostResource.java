@@ -15,47 +15,47 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.edu.ifs.workshop.mongo.domain.User;
-import br.edu.ifs.workshop.mongo.dto.UserDTO;
-import br.edu.ifs.workshop.mongo.services.UserService;
+import br.edu.ifs.workshop.mongo.domain.Post;
+import br.edu.ifs.workshop.mongo.dto.PostDTO;
+import br.edu.ifs.workshop.mongo.services.PostService;
 
 @RestController
-@RequestMapping(value = "/users")
-public class UserResource {
+@RequestMapping(value = "/posts")
+public class PostResource {
 
 	@Autowired
-	private UserService userService;
+	private PostService postService;
 
 	@GetMapping
-	public ResponseEntity<List<UserDTO>> findAll() {
-		List<UserDTO> list = userService.findAll().stream().map(user -> new UserDTO(user)).toList();
+	public ResponseEntity<List<PostDTO>> findAll() {
+		List<PostDTO> list = postService.findAll().stream().map(post -> new PostDTO(post)).toList();
 		return ResponseEntity.ok(list);
 	}
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
-		return ResponseEntity.ok(new UserDTO(userService.findById(id)));
+	public ResponseEntity<PostDTO> findById(@PathVariable String id) {
+		return ResponseEntity.ok(new PostDTO(postService.findById(id)));
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody UserDTO userDTO) {
-		User user = userService.fromDTO(userDTO);
-		user = userService.insert(user);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
+	public ResponseEntity<Void> insert(@RequestBody PostDTO postDTO) {
+		Post post = postService.fromDTO(postDTO);
+		post = postService.insert(post);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(post.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	
+
 	@DeleteMapping("{id}")
 	public ResponseEntity<Void> delete(@PathVariable String id) {
-		userService.delete(id);
+		postService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@PutMapping
-	public ResponseEntity<Void> update(@RequestBody User user) {
-		userService.update(user);
+	public ResponseEntity<Void> update(@RequestBody Post post) {
+		postService.update(post);
 		return ResponseEntity.noContent().build();
-		
+
 	}
 
 }
