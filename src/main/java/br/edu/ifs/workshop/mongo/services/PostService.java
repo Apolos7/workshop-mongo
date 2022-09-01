@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.edu.ifs.workshop.mongo.domain.Post;
-import br.edu.ifs.workshop.mongo.dto.PostDTO;
 import br.edu.ifs.workshop.mongo.repositories.PostRepository;
 import br.edu.ifs.workshop.mongo.services.exception.ObjectNotFoundException;
 
@@ -39,12 +38,6 @@ public class PostService {
 		Post newPost = findById(post.getId());
 		BeanUtils.copyProperties(post, newPost);
 		return postRepository.save(newPost);
-	}
-	
-	public Post fromDTO(PostDTO postDTO) {
-		Post post = new Post();
-		BeanUtils.copyProperties(postDTO, post);
-		return post;
 	}
 	
 }

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.edu.ifs.workshop.mongo.domain.Post;
-import br.edu.ifs.workshop.mongo.dto.PostDTO;
 import br.edu.ifs.workshop.mongo.services.PostService;
 
 @RestController
@@ -27,19 +26,18 @@ public class PostResource {
 	private PostService postService;
 
 	@GetMapping
-	public ResponseEntity<List<PostDTO>> findAll() {
-		List<PostDTO> list = postService.findAll().stream().map(post -> new PostDTO(post)).toList();
+	public ResponseEntity<List<Post>> findAll() {
+		List<Post> list = postService.findAll();
 		return ResponseEntity.ok(list);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<PostDTO> findById(@PathVariable String id) {
-		return ResponseEntity.ok(new PostDTO(postService.findById(id)));
+	public ResponseEntity<Post> findById(@PathVariable String id) {
+		return ResponseEntity.ok(postService.findById(id));
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody PostDTO postDTO) {
-		Post post = postService.fromDTO(postDTO);
+	public ResponseEntity<Void> insert(@RequestBody Post post) {
 		post = postService.insert(post);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(post.getId()).toUri();
 		return ResponseEntity.created(uri).build();

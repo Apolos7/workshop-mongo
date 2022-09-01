@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import br.edu.ifs.workshop.mongo.domain.Post;
 import br.edu.ifs.workshop.mongo.domain.User;
+import br.edu.ifs.workshop.mongo.dto.AuthorDTO;
 import br.edu.ifs.workshop.mongo.repositories.PostRepository;
 import br.edu.ifs.workshop.mongo.repositories.UserRepository;
 
@@ -32,14 +33,13 @@ public class Instantiation implements CommandLineRunner {
 		User marilia = new User(null, "Marilia Grey", "mariri_grey@gmail.com");
 		User alex = new User(null, "Alex Green", "alex@gmail.com");
 		User bob = new User(null, "Bob Grey", "bob@gmail.com");
-
-		Post p1 = new Post(null, new Date(System.currentTimeMillis()), "Mas que loucura",
-				"Juro que vi a maria conversando com a julia, logo a maria que tinha brigado feio com a julia", bob);
-		
-		Post p2 = new Post(null, new Date(System.currentTimeMillis() + 1928374659128L), "Bom dia", "Bom dia povo!", marilia);
-		
 		
 		userRepository.saveAll(Arrays.asList(marilia, alex, bob));
+
+		Post p1 = new Post(null, new Date(System.currentTimeMillis()), "Mas que loucura",
+				"Juro que vi a maria conversando com a julia, logo a maria que tinha brigado feio com a julia", new AuthorDTO(bob));
+		Post p2 = new Post(null, new Date(System.currentTimeMillis() + 1928374659128L), "Bom dia", "Bom dia povo!", new AuthorDTO(marilia));
+		
 		postRepository.saveAll(Arrays.asList(p1, p2));
 
 	}
