@@ -31,10 +31,14 @@ public class UserService {
 		return userRepository.insert(user);
 	}
 	
+	public void delete(String id) {
+		userRepository.delete(findById(id));
+	}
+	
 	public User fromDTO(UserDTO userDTO) {
 		User user = new User();
 		BeanUtils.copyProperties(userDTO, user);
 		return user;
 	}
-
+	
 }
