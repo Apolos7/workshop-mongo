@@ -21,30 +21,30 @@ public class UserService {
 	public List<User> findAll() {
 		return userRepository.findAll();
 	}
-	
+
 	public User findById(String id) {
 		Optional<User> user = userRepository.findById(id);
 		return user.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
-	
+
 	public User insert(User user) {
 		return userRepository.insert(user);
 	}
-	
+
 	public void delete(String id) {
 		userRepository.delete(findById(id));
 	}
-	
+
 	public User update(User user) {
 		User newUser = findById(user.getId());
 		BeanUtils.copyProperties(user, newUser);
 		return userRepository.save(newUser);
 	}
-	
+
 	public User fromDTO(UserDTO userDTO) {
 		User user = new User();
 		BeanUtils.copyProperties(userDTO, user);
 		return user;
 	}
-	
+
 }
