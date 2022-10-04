@@ -1,5 +1,6 @@
 package br.edu.ifs.workshop.mongo.resources;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +33,24 @@ public class PostResource {
 		List<Post> listaPosts = postService.findByTitle(text);
 		return ResponseEntity.ok(listaPosts);
 	}
-	
+
 	@GetMapping("/body-search")
 	public ResponseEntity<List<Post>> findByBody(@RequestParam(value = "body", defaultValue = "") String body) {
 		var text = URL.decodeParam(body);
 		List<Post> listaPosts = postService.findByBody(text);
+		return ResponseEntity.ok(listaPosts);
+	}
+
+	@GetMapping("/complex-search")
+	public ResponseEntity<List<Post>> complexSearch(@RequestParam(value = "text", defaultValue = "") String text,
+			@RequestParam(value = "minDate", defaultValue = "") String minDate,
+			@RequestParam(value = "maxDate", defaultValue = "") String maxDate) {
+		var textDecoded = URL.decodeParam(text);
+		var minDateConverted = URL.convertDate(minDate, new Date(0));
+		var maxDateConverted = URL.convertDate(maxDate, new Date());
+		
+		List<Post> listaPosts = postService.complexSearch(textDecoded, minDateConverted, maxDateConverted);
+		
 		return ResponseEntity.ok(listaPosts);
 	}
 

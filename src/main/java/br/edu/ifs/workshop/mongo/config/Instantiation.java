@@ -39,7 +39,7 @@ public class Instantiation implements CommandLineRunner {
 
 		Post p1 = new Post(null, new Date(System.currentTimeMillis()), "Mas que loucura",
 				"Juro que vi a maria conversando com a julia, logo a maria que tinha brigado feio com a julia", new AuthorDTO(bob));
-		Post p2 = new Post(null, new Date(System.currentTimeMillis() + 1928374659128L), "Bom dia", "Bom dia povo!", new AuthorDTO(marilia));
+		Post p2 = new Post(null, new Date(System.currentTimeMillis() + 9128L), "Bom dia", "Bom dia povo!", new AuthorDTO(marilia));
 		
 		
 		CommentDTO c1 = new CommentDTO("Acho que você não devia fofocar tanto mestre.", new Date(System.currentTimeMillis() + 98127364L), new AuthorDTO(alex));
